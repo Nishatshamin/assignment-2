@@ -1,4 +1,7 @@
 const lockedOutUserOperation = "./test/specs/lockedOutUser.spec.js";
+const standardUserOperation = "./test/specs/standardUser.spec.js";
+const pgUserOperation = "./test/specs/pgUser.spec.js";
+
 exports.config = {
     //
     // ====================
@@ -23,11 +26,16 @@ exports.config = {
     //
     specs: [
         lockedOutUserOperation,
+        standardUserOperation,
+        pgUserOperation,
     ],
+    suites: {
+        allspecs: [[lockedOutUserOperation, standardUserOperation, pgUserOperation]],
+    },
     // Patterns to exclude.
-    exclude: [
-        // 'path/to/excluded/files'
-    ],
+    // exclude: [
+    //     // 'path/to/excluded/files'
+    // ],
     //
     // ============
     // Capabilities
@@ -62,7 +70,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:
@@ -89,7 +97,7 @@ exports.config = {
     baseUrl: 'https://www.saucedemo.com/',
         //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 30000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
@@ -126,6 +134,12 @@ exports.config = {
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
     // reporters: ['dot'],
+    reporters: [['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: false,
+        disableWebdriverScreenshotsReporting: false,
+    }]],
+
 
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
@@ -232,15 +246,28 @@ exports.config = {
      */
     // afterTest: function(test, context, { error, result, duration, passed, retries }) {
     // },
+    afterTest: function(test, context, { error, result, duration, passed, retries }) {
+    },
+    afterTest: async function (
+        test,
+        context,
+        { error, result, duration, passed, retries }
+      ) {
+        if (error) {
+          const screenshot = await browser.takeScreenshot();
+          allure.addAttachment("Screenshot",Buffer.from(screenshot, "base64"),"failure/png"
+          );
+        }
+    }
 
 
     /**
      * Hook that gets executed after the suite has ended
      * @param {object} suite suite details
      */
-    afterSuite: async function (suite) {
-        await browser.quit();
-     },
+    // afterSuite: async function (suite) {
+    //     await browser.quit();
+    //  },
     /**
      * Runs after a WebdriverIO command gets executed
      * @param {string} commandName hook command name

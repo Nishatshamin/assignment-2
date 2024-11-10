@@ -3,15 +3,21 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "wdio run ./wdio.conf.js"
+    "test": "wdio run ./wdio.conf.js",
+    "allspecs": "wdio run ./wdio.conf.js --suite allspecs",
+    "Report": "allure generate allure-results --clean && allure open"
   },
   "keywords": [],
-  "author": "",
+  "author": "nishat",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@wdio/allure-reporter": "^9.2.2",
     "@wdio/cli": "^9.2.8",
     "@wdio/local-runner": "^9.2.8",
     "@wdio/mocha-framework": "^9.2.8"
+  },
+  "dependencies": {
+    "allure-commandline": "^2.32.0"
   }
 }

@@ -2,8 +2,8 @@ const lockedOutuserLocator = require("./lockedOutUserLocator");
 
 class louLoginActions{
     
-    async clickOnUserName(louname){
-        await lockedOutuserLocator.usernameField.setValue(louname);
+    async clickOnUserName(loUsername){
+        await lockedOutuserLocator.usernameField.setValue(loUsername);
     }
 
     async clickOnUserpassword(password){
