@@ -22,15 +22,15 @@ To add a full WebdriverIO setup:
 npm init wdio@latest
 ```
 ## Please follow these command to Run Code:
-To run suites for sequential way, execute: 
+For sequential way, execute: 
 ```
-npm run allspecsRun
+npm run allspecs
 ```
-To run specs for separately, execute: 
+For separately, execute: 
 ```
 npm run test
 ```
-## To get report, execute following command: 
+## To get report, execute this following command: 
 ```
-npm run getReport
+npm run Report
 ```
